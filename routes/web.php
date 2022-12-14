@@ -31,12 +31,9 @@ Route::get('/saludo/{nombre?}', function ($nombre = "Mundo") {
     echo "Hola $nombre";
 });
 
-Route::get('/studies', [StudyController::class, 'index']);
+//Route::get('/studies', [StudyController::class, 'index']);
+//Route::get('/studies/create', [StudyController::class, 'create']);
+//Route::get('/studies/{id}', [StudyController::class, 'show']);
+//Route::get('/studies/{id}/edit', [StudyController::class, 'edit']);
 
-Route::get('/studies/create', [StudyController::class, 'create']);
-
-Route::get('/studies/{id}', [StudyController::class, 'show']);
-
-
-Route::get('/studies/{id}/edit', [StudyController::class, 'edit']);
-
+Route::resource('/studies', StudyController::class);
