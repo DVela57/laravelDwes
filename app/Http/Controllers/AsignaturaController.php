@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-class AulaController extends Controller
+class AsignaturaController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -23,7 +23,8 @@ class AulaController extends Controller
      */
     public function create()
     {
-        //
+        //muestra formulario
+        return view('asignaturas.create');
     }
 
     /**
@@ -34,7 +35,8 @@ class AulaController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        //recoje los datos del formulario de alta
+        dd("He llegado aqui");
     }
 
     /**

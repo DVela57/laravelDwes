@@ -11,3 +11,9 @@
     @parent
     <h4>Adicional en main content</h4>
 @stop
+
+@section('secondaryContent')
+    <h4>Contenido remplazado de secondaryContent</h4>
+
+{{ $nombremodulo }}
+@stop   

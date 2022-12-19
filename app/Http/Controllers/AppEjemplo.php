@@ -30,7 +30,9 @@ class AppEjemplo extends Controller
         
     //);
 
-            return view('asignaturas.page');    
+            return view('asignaturas.page', compact('nombremodulo', 'ciclo',
+            'departamentos')  
+        );  
     }
 
     /**

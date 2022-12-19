@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\StudyController;
 use App\Http\Controllers\PruebaController;
 use App\Http\Controllers\AppEjemplo;
+use App\Http\Controllers\AsignaturaController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -54,3 +55,7 @@ Route::get('prueba2/{name}', [PruebaController::class, 'saludoCompleto']);
 
 Route::get('/informacion-asignatura', 
 [AppEjemplo::class, 'mostrarinformacion']) ->name('infoasig');
+
+//ejercicio1
+
+Route::resource('asignaturas', AsignaturaController::class);
