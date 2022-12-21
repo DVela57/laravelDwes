@@ -6,6 +6,8 @@ use App\Http\Controllers\StudyController;
 use App\Http\Controllers\PruebaController;
 use App\Http\Controllers\AppEjemplo;
 use App\Http\Controllers\AsignaturaController;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\CatalogController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -17,10 +19,10 @@ use App\Http\Controllers\AsignaturaController;
 |
 */
 
-Route::get('/', function () {
+/*Route::get('/', function () {
     //return view('welcome');
     print "<a href='" . Route('infoasig') . "'>Informacion Asignatura</a><br>";
-});
+});*/
 
 Route::get('/hola', function () {
     return $_SERVER;
@@ -59,3 +61,11 @@ Route::get('/informacion-asignatura',
 //ejercicio1
 
 Route::resource('asignaturas', AsignaturaController::class);
+
+//ejercicioVideoclub
+
+Route::get('/', [HomeController::class, 'getHome']);
+Route::get('/catalog', [CatalogController::class, 'getIndex']);
+Route::get('/catalog/show/{id}', [CatalogController::class, 'getShow']);
+Route::get('/catalog/create', [CatalogController::class, 'getCreate']);
+Route::get('/catalog/edit/{id}', [CatalogController::class, 'getEdit']);
