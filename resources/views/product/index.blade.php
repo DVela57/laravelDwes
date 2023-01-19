@@ -5,8 +5,13 @@
     <div class="row justify-content-center">
         <div class="col-md-12">
             <h1>Lista de Productos:<h1>
+                @if ($message = Session::get('exito'))
+                <div class="alert alert-success">
+                    <p>{{ $message}}</p>
+                </div>
+                @endif
             <a href="{{ route('products.create') }}" class="btn btn-primary">Nuevo Producto</a>
-                
+
             <table class="table table-striped table-hover table-bordered">
                 <tr>
                     <td>Nombre</td>
