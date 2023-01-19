@@ -1,56 +1,42 @@
-@extends('layouts.master')
+@extends('layouts.app')
 
-@section('title', 'Listado productos')
+@section('content')
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-12">
+            <h1>Lista de Productos:<h1>
+            <a href="{{ route('products.create') }}" class="btn btn-primary">Nuevo Producto</a>
+                
+            <table class="table table-striped table-hover table-bordered">
+                <tr>
+                    <td>Nombre</td>
+                    <td>Descripcion</td>
+                    <td>Precio</td>
+                </tr>
+                @foreach($productList as $product)
+                <tr>
+                    <td>{{ $product->nombre }}</td>
+                    <td>{{ $product->description }}</td>
+                    <td>{{ $product->precio }}</td>
 
-@section('encabezado')
-    Listado de productos
-@stop
-
-@section('cuerpo')
-    @parent
-    <br>
-    @if($errors->any())
-        <div class="alert alert-danger" role="alert">
-            <h6>Por favor corrige los siguientes errores:</h6>
-            <ul>
-                @foreach($errors->all() as $error)
-                    <li>{{$error}}</li> 
+                    <td>
+                        <a class="btn btn-primary" href="{{ route('products.edit', $product->id) }}">Editar</a>
+                    </td>
+                    <td>
+                        <a class="btn btn-primary" href="{{ route('products.show', $product->id) }}">Ver</a>
+                    </td>
+                    <td>
+                    <form action="{{route('products.destroy', $product->id) }}" method="post">
+                        @csrf
+                        @method('DELETE')
+                        <button class="btn btn-primary" type="submit">Borrar</button>
+                    </form>
+                    </td>
+                </tr>
                 @endforeach
-            </ul>
+            </table>
+
         </div>
-    @endif
-    <br>Lista de Productos:<br>
-    <a href="{{ route('products.create') }}">Nuevo Producto</a>
-    <table border="1">
-        <tr>
-            <td>Nombre</td>
-            <td>Descripcion</td>
-            <td>Precio</td>
-        </tr>
-        @foreach($productList as $product)
-            <tr>
-                <td>{{ $product->nombre }}</td>
-                <td>{{ $product->description }}</td>
-                <td>{{ $product->precio }}</td>
-
-                <td>
-                    <a href="{{ route('products.edit', $product->id) }}">Editar</a>
-                </td>
-                <td>
-                    <a href="{{ route('products.show', $product->id) }}">Ver</a>
-                </td>
-                <td>
-                    Borrar
-                </td>
-            </tr>
-        @endforeach
-    </table>
-@stop
-
-@section('boton')
-    @parent
-    @stop
-    
-
-
-
+    </div>
+</div>
+@endsection
