@@ -4,10 +4,10 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
 use App\Models\Order;
+use App\Models\Client;
 
-class OrderSeeder extends Seeder
+class ClientOrderSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -16,6 +16,11 @@ class OrderSeeder extends Seeder
      */
     public function run()
     {
-        Order::factory()->count(40)->create();
+        Order::factory()->count(22)->create();
+
+        Client::factory()->count(43)->create()->each
+        (function($client){
+            $client->orders()->sync(Order::all()->random(4));
+        });
     }
 }

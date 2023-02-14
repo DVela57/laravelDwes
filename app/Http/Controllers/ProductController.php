@@ -8,6 +8,15 @@ use App\Models\Product;
 
 class ProductController extends Controller
 {
+
+    public function __construct()
+    {
+        if (session('contador') == null) {
+            session(['contador' => 0]);
+        }
+        $this->middleware('auth');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -15,6 +24,10 @@ class ProductController extends Controller
      */
     public function index()
     {
+        $this->authorize('viewAny', Product::class);
+
+        
+
         $productList = Product::all(); //eloquent
         //return $productList;
        return view('product.index', ['productList'=>$productList]);
@@ -27,6 +40,7 @@ class ProductController extends Controller
      */
     public function create()
     {
+        $this->authorize('create', Product::class);
         return view('product.create');
     }
 
@@ -73,7 +87,19 @@ class ProductController extends Controller
      */
     public function show($id)
     {
+        
+        if ($id % 2 == 0) {
+            $e = session('contador');
+            $e = $e + 1;
+            session(['contador' => $e]);
+            session(['color' => 'verde']);
+        } else {
+            session(['contador' => 0]);
+            session(['color' => 'rojo']);
+        }
+
         $product = Product::find($id);
+        $this->authorize('view', $product);
         //return $product;
        return view('product.show', ['product'=>$product]);
     }
@@ -87,6 +113,7 @@ class ProductController extends Controller
     public function edit($id)
     {
         $product = Product::find($id);
+        $this->authorize('update', $product);
        return view('product.edit', ['product'=>$product]);
     }
 
@@ -130,6 +157,7 @@ class ProductController extends Controller
     public function destroy($id)
     {
         $product = Product::find($id);
+        $this->authorize('delete', $product);
         $product->delete();
         return redirect()->route('products.index')->with('exito', 'Producto Borrado');
     }
