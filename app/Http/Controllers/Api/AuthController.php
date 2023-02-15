@@ -33,7 +33,7 @@ class AuthController extends Controller
             }
             return $this->respondWithToken($token);*/
 
-            if ($token = auth()->attempt($credentials)) {
+            if ($token = auth('api')->attempt($credentials)) {
                 return $this->respondWithToken($token);
             } else {
                 return response()->json(['error' => 'Credenciales Invalidas'], 400);
@@ -52,7 +52,7 @@ class AuthController extends Controller
      */
     public function me()
     {
-        return response()->json(auth()->user());
+        return response()->json(auth('api')->user());
     }
 
     /**
@@ -62,9 +62,9 @@ class AuthController extends Controller
      */
     public function logout()
     {
-        auth()->logout();
+        auth('api')->logout();
 
-        return response()->json(['message' => 'Successfully logged out']);
+        return response()->json(['message' => 'Salio con exito']);
     }
 
     /**
@@ -74,7 +74,7 @@ class AuthController extends Controller
      */
     public function refresh()
     {
-        return $this->respondWithToken(auth()->refresh());
+        return $this->respondWithToken(auth('api')->refresh());
     }
 
     /**

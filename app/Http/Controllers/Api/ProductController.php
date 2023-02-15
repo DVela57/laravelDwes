@@ -9,6 +9,11 @@ use Illuminate\Support\Facades\Validator;
 
 class ProductController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('auth:api', ['except' => ['login', 'register']]);
+    }
     /**
      * Display a listing of the resource.
      *
@@ -16,8 +21,15 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $products = Product::all();
-        return response()->json(['status' => 'ok', 'data' => $products], 200);
+        $user = \Auth::user();
+        if ($user->can('viewAny', Product::class)) {
+            $products = Product::all();
+            return response()->json(['status' => 'ok', 'data' => $products], 200);
+        } else {
+            return response()->json(['status' => 'nok', 
+            'message' => 'No tienes permisos'], 403);
+        }
+        
     }
 
    
@@ -29,6 +41,12 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
+
+        $user = \Auth::user();
+        if ($user->cant('create', Product::class)) {
+            return response()->json(['status' => 'nok', 
+            'message' => 'No tienes permisos'], 403);
+        }
         $validator = Validator::make($request->all(), [
             "nombre" => 'required|max:100',
             "description" => 'required',
@@ -59,10 +77,17 @@ class ProductController extends Controller
     public function show($id)
     {
         $product = Product::find($id);
-
         if (!$product) {
             return response()->json(['errors' => (['code' => 404, 'message' => 'Product Not Fouund'])], 404);
         }
+        $user = \Auth::user();
+        if ($user->cant('view', $product )) {
+            return response()->json(['status' => 'nok', 
+            'message' => 'No tienes permisos'], 403);
+        }
+        
+
+        
         return response()->json(['status' => 'correcto', 'data' =>  $product], 200);
     }
 
@@ -80,6 +105,13 @@ class ProductController extends Controller
         if (!$product) {
             return response()->json(['status' => 'nok', 'data' => 'Product Not Fouund'], 404);
         }
+        $user = \Auth::user();
+        if ($user->cant('update', $product)) {
+            return response()->json(['status' => 'nok', 
+            'message' => 'No tienes permisos'], 403);
+        }
+        
+       
 
         $validator = Validator::make($request->all(), [
             "nombre" => 'required|max:100',
@@ -110,10 +142,17 @@ class ProductController extends Controller
     public function destroy($id)
     {
         $product = Product::find($id);
-
         if (!$product) {
             return response()->json(['status' => 'nok', 'data' => 'Product Not Fouund'], 404);
         }
+        $user = \Auth::user();
+        if ($user->cant('delete', $product)) {
+            return response()->json(['status' => 'nok', 
+            'message' => 'No tienes permisos'], 403);
+        }
+        $product = Product::find($id);
+
+       
 
        try {
         $product->delete();
