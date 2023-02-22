@@ -24,7 +24,7 @@ class OrderFactory extends Factory
     {
         return [
             "solicitante"=> $this->faker->name(),
-            "fecha"=> $this->faker->date('Y_m_d'),
+            "fecha"=> $this->faker->date('Y-m-d'),
             "descripcion"=> $this->faker->sentence(6),
            // "client_id"=> Client::inRandomOrder()->first()->id
         ];

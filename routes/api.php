@@ -6,6 +6,8 @@ use App\Http\Controllers\Api\ProductController;
 use App\Http\Controllers\Api\StudyController;
 //En la parte superiror:
 use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\Api\OrderController;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -50,4 +52,5 @@ Route::resource('/products', ProductController::class)->except(['create', 'edit'
 
 Route::resource('/studies', StudyController::class)->except(['create', 'edit']);
 
+Route::resource('/orders', OrderController::class)->except(['create', 'edit']);
 

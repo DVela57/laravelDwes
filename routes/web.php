@@ -11,6 +11,8 @@ use App\Http\Controllers\CatalogController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\ProductoController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -75,6 +77,11 @@ Route::get('/catalog/edit/{id}', [CatalogController::class, 'getEdit']);
 
 */
 // ejemplo 
+
+Route::get('/productos/html', [ProductoController::class, 'indexhtml']);
+Route::get('/productos/json', [ProductoController::class, 'indexjson']);
+Route::resource('productos', ProductoController::class);
+
 
 Route::resource('products', ProductController::class);
 Auth::routes();
